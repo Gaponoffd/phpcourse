@@ -1,11 +1,17 @@
 <?php
+
 ///Задание 1
 function task1($paragraph1, $paragraph2 = false)
 {
+    $var = "";
     if ($paragraph2) {
-        $var = "<p>".$paragraph1.$paragraph2."</p>";
+        foreach ($paragraph1 as $string) {
+            $var .= $string . " ";
+        }
     } else {
-        $var = "<p>".$paragraph1."</p>";
+        foreach ($paragraph1 as $string) {
+            $var .= "<p>$string</p>";
+        }
     }
     return $var;
 };
@@ -52,6 +58,7 @@ function task2($arg, $numbers)
 ///Задание 3
 function task3($columns, $rows)
 {
+    echo '<table cellspacing="0" border="1">';
     if (!is_int($columns) || !is_int($rows)) {
         echo "Задайте целое число";
         return null;
@@ -62,18 +69,19 @@ function task3($columns, $rows)
     }
     for ($i=1; $i<=$columns; $i++) {
         echo'<tr>';
-        echo '<br>';
         for ($j=1; $j<=$rows; $j++) {
             $s=$j*$i;
-            echo'<td>'."($s)".'</td>';
+            echo "<td>".$i."x".$j."=".$s."</td>";
         }
+        echo'</tr>';
     }
+    echo '</table>';
 }
 
 ///Задание 4
 function task4()
 {
-    echo date("d/m/Y h.i");
+    echo date("d.m.Y H:i");
 }
 
 function task5($date)

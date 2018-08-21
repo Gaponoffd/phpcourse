@@ -1,15 +1,16 @@
 <?php
 require_once "./function.php";
 
-echo task1("Привет", " мир");
-echo task1("Привет");
+$strings = array("Привет", "Участникам", "Соревнований");
+echo task1($strings);
+//echo task1("Привет");
 echo "<br><br>";
 
 $aaa = [10,5,2];
 echo task2("+", $aaa);
 echo "<br><br>";
 
-task3(6, 2);
+task3(6, 6);
 echo "<br><br>";
 
 task4();
