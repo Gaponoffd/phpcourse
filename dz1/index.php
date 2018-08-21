@@ -37,7 +37,7 @@ if ($age>=18 & $age<=65) {
 echo '<br>','<br>';
 
 //Задание 4
-$day = -4;
+$day = 8;
 switch ($day) {
     case 1:
     case 2:
@@ -50,8 +50,7 @@ switch ($day) {
     case 7:
         echo "Это выходной день";
         break;
-    case $day<1:
-    case $day<7:
+    default:
         echo "Неизвестный день";
         break;
 }
@@ -79,26 +78,24 @@ $auto = [
     ]
 ];
 
-echo 'Car: BMW <br>';
-print_r($auto[0]["model"].' '.$auto[0]["speed"].' '.$auto[0]["doors"].' '.$auto[0]["year"]);
-echo '<br>';
-echo 'Car: toyota <br>';
-print_r($auto[1]["model"].' '.$auto[1]["speed"].' '.$auto[1]["doors"].' '.$auto[1]["year"]);
-echo '<br>';
-echo 'Car: opel <br>';
-print_r($auto[2]["model"].' '.$auto[2]["speed"].' '.$auto[2]["doors"].' '.$auto[2]["year"]);
-echo '<br>','<br>';
+foreach ($auto as $car) {
+    echo "Car: " .$car["model"]. "<br>";
+    echo $car["model"].' '.$car["speed"].' '.$car["doors"].' '.$car["year"];
+    echo "<br>";
+}
 
 //Задание 6
+echo '<table cellspacing="0" border="1">';
 for ($i=1; $i<=10; $i++) {
     echo'<tr>';
-    echo '<br>';
     for ($j=1; $j<=10; $j++) {
         $s=$j*$i;
-        if (($s)%2==0) {
-            echo'<td>'."($s)".'</td>';
-        } elseif (($s)%2!=0) {
-            echo'<td>'."[$s]".'</td>';
+        if ($s % 2 == 0) {
+            echo "<td>".$i."x".$j."="."($s)"."</td>";
+        } else {
+            echo "<td>".$i."x".$j."="."[$s]"."</td>";
         }
     }
+    echo'</tr>';
 }
+echo '</table>';
