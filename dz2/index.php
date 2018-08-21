@@ -3,11 +3,9 @@ require_once "./function.php";
 
 $strings = array("Привет", "Участникам", "Соревнований");
 echo task1($strings);
-//echo task1("Привет");
 echo "<br><br>";
 
-$aaa = [10,5,2];
-echo task2("+", $aaa);
+echo task2("/", 24, 2, 3);
 echo "<br><br>";
 
 task3(6, 6);
@@ -16,13 +14,13 @@ echo "<br><br>";
 task4();
 echo "<br><br>";
 
-task5("24.02.2016 00:00:00");
+task4_1("24.02.2016 00:00:00");
 echo "<br><br>";
 
-task6();
+task5();
 echo "<br><br>";
 
-task7();
+task5_1();
 echo "<br><br>";
 
-task8("test.txt");
+task6("test.txt");

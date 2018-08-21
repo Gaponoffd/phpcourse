@@ -1,58 +1,60 @@
 <?php
 
 ///Задание 1
-function task1($paragraph1, $paragraph2 = false)
+function task1($paragraph, $bool = false)
 {
     $var = "";
-    if ($paragraph2) {
-        foreach ($paragraph1 as $string) {
+    if ($bool) {
+        foreach ($paragraph as $string) {
             $var .= $string . " ";
         }
     } else {
-        foreach ($paragraph1 as $string) {
+        foreach ($paragraph as $string) {
             $var .= "<p>$string</p>";
         }
     }
     return $var;
-};
+}
 
 ///Задание 2
-function task2($arg, $numbers)
+function task2()
 {
-    $data = null;
-    foreach ($numbers as $value) {
-        switch ($arg) {
+    $var_array = func_get_args();
+    $num = count($var_array);
+    $res = null;
+    for ($i=1; $i<$num; $i++) {
+        switch ($var_array[0]) {
             case "+":
-                if (empty($data)) {
-                    $data = $value;
+                if (empty($res)) {
+                    $res =  $var_array[1];
                 } else {
-                    $data += $value;
+                    $res += $var_array[$i];
                 }
                 break;
             case "-":
-                if (empty($data)) {
-                    $data = $value;
+                if (empty($res)) {
+                    $res =  $var_array[1];
                 } else {
-                    $data -= $value;
+                    $res -= $var_array[$i];
                 }
                 break;
             case "*":
-                if (empty($data)) {
-                    $data = $value;
+                if (empty($res)) {
+                    $res =  $var_array[1];
                 } else {
-                    $data *= $value;
+                    $res *= $var_array[$i];
                 }
                 break;
             case "/":
-                if (empty($data)) {
-                    $data = $value;
+                if (empty($res)) {
+                    $res =  $var_array[1];
                 } else {
-                    $data /= $value;
+                    $res /= $var_array[$i];
                 }
                 break;
         }
     }
-    return $data;
+    echo $res;
 }
 
 ///Задание 3
@@ -84,26 +86,26 @@ function task4()
     echo date("d.m.Y H:i");
 }
 
-function task5($date)
+function task4_1($date)
 {
     echo strtotime($date);
 }
 
 ///Задание 5
-function task6()
+function task5()
 {
     $string = "Карл у Клары украл Кораллы";
     echo str_replace("К", "", $string);
 }
 
-function task7()
+function task5_1()
 {
     $str = "Две бутылки лимонада";
     echo str_replace("Две", "Три", $str);
 }
 
 ///Задание 6
-function task8($name)
+function task6($name)
 {
     $string = "Hello again!";
     $test = fopen($name, "w+");
