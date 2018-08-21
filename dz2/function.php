@@ -73,7 +73,7 @@ function task3($columns, $rows)
 ///Задание 4
 function task4()
 {
-    echo date("d/m/Y");
+    echo date("d/m/Y h.i");
 }
 
 function task5($date)
