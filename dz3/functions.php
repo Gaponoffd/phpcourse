@@ -60,26 +60,18 @@ function task2()
     ];
     $jsonenc = json_encode($country, JSON_UNESCAPED_UNICODE);
     file_put_contents("output.json", $jsonenc);
-
     $var = file_get_contents("output.json");
-//    $jsondec = json_decode($var, true);
 
-//    $flag = rand(true, false);
-    if (true) {
+    $flag = rand(true, false);
+    if ($flag) {
         $jsondec = json_decode($var, true);
         $jsondec[0]=["Murmansk", "Omsk", "Ufa"];
         $jsonenc2 = json_encode($jsondec, JSON_UNESCAPED_UNICODE);
         file_put_contents("output2.json", $jsonenc2);
         $var2 = file_get_contents("output2.json");
-
-//        print_r($var2);
     }
     echo "<br />";
-//    print_r($jsondec);
-
     echo "<pre>";
-//    print_r(json_decode($var, true));
-//    print_r(json_decode($var2, true));
-    print_r($var);
-    print_r($var2);
+    print_r(json_decode($var));
+    print_r(json_decode($var2));
 }
