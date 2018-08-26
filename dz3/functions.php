@@ -75,3 +75,25 @@ function task2()
     print_r(json_decode($var));
     print_r(json_decode($var2));
 }
+function task3()
+{
+    $arr = [];
+    for ($i=1; $i<=50; $i++) {
+        $number = rand(1, 100);
+        array_push($arr, $number);
+    }
+
+    $file = fopen('./test.csv', 'w');
+        fputcsv($file, $arr, ';');
+    fclose($file);
+
+    $csvFile = fopen('./test.csv', 'r');
+    $csvData = fgetcsv($csvFile, '200', ';');
+    $sum = 0;
+    foreach ($csvData as $item) {
+        if ($item % 2 == 0) {
+            $sum += $item;
+        }
+    }
+    echo $sum;
+}
