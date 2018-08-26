@@ -4,6 +4,8 @@ function task1()
     $file = file_get_contents("./data.xml");
     $xml = new SimpleXMLElement($file);
 
+    echo "<b>Номер заказа: </b>" . $xml->attributes()->PurchaseOrderNumber. " " .
+    "<b>Дата: </b>" . $xml->attributes()->OrderDate . '<br />';
     foreach ($xml->Address as $item) {
         echo "<b>" . $item->attributes()->__toString() . '<br />' . "</b>";
         echo "<b>Имя: </b>" . $item->Name . '<br />';
@@ -69,11 +71,19 @@ function task2()
         $jsonenc2 = json_encode($jsondec, JSON_UNESCAPED_UNICODE);
         file_put_contents("output2.json", $jsonenc2);
         $var2 = file_get_contents("output2.json");
+    } else {
+        $jsondec = json_decode($var, true);
+        $jsonenc2 = json_encode($jsondec, JSON_UNESCAPED_UNICODE);
+        file_put_contents("output2.json", $jsonenc2);
+        $var2 = file_get_contents("output2.json");
     }
     echo "<br />";
     echo "<pre>";
-    print_r(json_decode($var));
-    print_r(json_decode($var2));
+    $arr1 = json_decode($var, true);
+    $arr2 = json_decode($var2, true);
+
+    $result = array_diff($arr2[0], $arr1[0]);
+    print_r($result);
 }
 function task3()
 {
@@ -84,7 +94,7 @@ function task3()
     }
 
     $file = fopen('./test.csv', 'w');
-        fputcsv($file, $arr, ';');
+    fputcsv($file, $arr, ';');
     fclose($file);
 
     $csvFile = fopen('./test.csv', 'r');
@@ -96,4 +106,14 @@ function task3()
         }
     }
     echo $sum;
+}
+function task4()
+{
+    $address = "https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&rvprop=content&format=json";
+    $jsonStr = file_get_contents($address);
+    $jsonDec = json_decode($jsonStr, true);
+    echo "<pre>";
+//    print_r ($jsonDec);
+    echo $jsonDec['query']['pages'][15580374]['title'] . "<br />";
+    echo $jsonDec['query']['pages'][15580374]['pageid'];
 }

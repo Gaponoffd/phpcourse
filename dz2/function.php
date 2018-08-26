@@ -48,6 +48,10 @@ function task2()
             case "/":
                 if (empty($res)) {
                     $res =  $var_array[1];
+                } elseif ($var_array[$i] == 0) {
+                    echo "На ноль делить нельзя";
+                    $res = null;
+                    return;
                 } else {
                     $res /= $var_array[$i];
                 }

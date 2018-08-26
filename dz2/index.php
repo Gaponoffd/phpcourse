@@ -5,7 +5,7 @@ $strings = array("Привет", "Участникам", "Соревновани
 echo task1($strings);
 echo "<br><br>";
 
-echo task2("/", 24, 2, 3);
+echo task2("/", 24, 2, 2, 0);
 echo "<br><br>";
 
 task3(6, 6);
