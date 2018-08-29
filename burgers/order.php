@@ -1,50 +1,56 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "burger");
-if (mysqli_connect_errno()) {
-    printf("Ошибка соединения:%s\n", mysqli_connect_error());
-    exit();
+echo '<pre>';
+//print_r($_POST);
+$dsn = "mysql:host=localhost;charset=utf8;";
+$pdo = new PDO($dsn, 'root', '');
+$pdo->query('use burger');
+//$prepare = $pdo -> prepare('SELECT * FROM users WHERE email = :email');
+//$prepare->execute(['email'=>$_POST['email']]);
+//$result = $prepare->fetchAll(PDO::FETCH_ASSOC);
+//
+//var_dump($result);
+
+
+function alreadyRegistered($email, $pdo)
+{
+    // asd@asd.ru
+    $prepared = $pdo->prepare('select * from users where email = :email');
+    $prepared->execute(['email' => trim($email)]);
+    return $prepared->fetch(PDO::FETCH_ASSOC);
 }
 
-//$email = $_REQUEST["email"];
-//$name = $_REQUEST["name"];
-//$phone = $_REQUEST["phone"];
-//$street = $_REQUEST["street"];
-//$home = $_REQUEST["home"];
-//$housing = $_REQUEST["housing"];
-//$apartment = $_REQUEST["apartment"];
-//$floor = $_REQUEST["floor"];
-//$comment = $_REQUEST["comment"];
-$email = 'уцуцa';
-$name = 'дима';
-$phone = '8888';
+$isRegistered = alreadyRegistered($_POST['email'], $pdo);
 
 
-echo "<pre>";
-
-$been = "SELECT email FROM `users`";
-$been = "SELECT email FROM `users`";
-$beenSqli = $mysqli->query($been);
-$beenFetch = $beenSqli -> fetch_all();
-
-//$numberOrders=1;
-if($beenFetch==array()) {
-    $sql = "INSERT INTO `users` (email, name, phone, number_orders) VALUES ('$email', '$name','$phone', '1')";
-    $result = $mysqli->query($sql);
-//    $numberOrders = 1;
+if (!$isRegistered) {
+    $isRegistered = registerUser($_POST['name'], $_POST['email'], $_POST['phone'], $pdo);
 } else {
-    $numberOrders += $numberOrders;
-    foreach ($beenFetch as $item) {
-        if ($item[0] == $email) {
-            $sqlNub = "UPDATE users SET number_orders = '$item[4]+1'";
-            $result = $mysqli->query($sqlNub);
-        }
-        print_r($beenFetch);
-    }
+//    echo 'ddddddd';
 }
-//echo $numberOrders;
 
-//$sql2 = "INSERT INTO `order` (street, home, housing, apartment, floor, comment)
-//VALUES ('$street', '$home', '$housing', '$apartment', '$floor', '$comment')";
-//$result2 = $mysqli->query($sql2);
+function registerUser($name, $email, $phone, Pdo $pdo)
+{
+    $prepared = $pdo->prepare('INSERT INTO users (name, email, phone) VALUES (:name, :email, :phone)');
+    $prepared->execute(['email' => trim($email), 'name' => $name, 'phone' => $phone]);
+    $id = $pdo->lastInsertId();
+    $prepared = $pdo->prepare('select * from users where id = :id');
+    $prepared->execute(['id' => $id]);
+    return $prepared->fetch(PDO::FETCH_ASSOC);
+}
 
-//print_r($been3);
+function registerOrder($street, $home, $housing, $apartment, $floor, $comment, $id_users, $pdo)
+{
+    $prepared = $pdo->prepare('INSERT INTO `order` (street, home, housing, apartment, floor, comment, id_users)
+ VALUES (:street, :home, :housing, :apartment, :floor, :comment, :id_users)');
+    $prepared->execute(['street' => $street, 'home' => $home, 'housing' => $housing, 'apartment' => $apartment, 'floor' => $floor, 'comment' => $comment, 'id_users' => $id_users]);
+    $id = $pdo->lastInsertId();
+    $prepared = $pdo->prepare('select * from order where id = :id');
+    $prepared->execute(['id' => $id]);
+    return $prepared->fetch(PDO::FETCH_ASSOC);
+}
+
+$data = registerOrder($_POST['street'], $_POST['home'], $_POST['part'], $_POST['appt'], $_POST['floor'], $_POST['comment'],$isRegistered['id'], $pdo);
+//print_r($isRegistered);
+$da = json_encode($data);
+print_r($data);
+file_put_contents('admin.html', 'zakaz '.$data['id']);
