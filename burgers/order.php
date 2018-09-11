@@ -1,56 +1,54 @@
 <?php
-echo '<pre>';
-//print_r($_POST);
+
 $dsn = "mysql:host=localhost;charset=utf8;";
 $pdo = new PDO($dsn, 'root', '');
 $pdo->query('use burger');
-//$prepare = $pdo -> prepare('SELECT * FROM users WHERE email = :email');
-//$prepare->execute(['email'=>$_POST['email']]);
-//$result = $prepare->fetchAll(PDO::FETCH_ASSOC);
-//
-//var_dump($result);
+require_once "./order-function.php";
 
-
-function alreadyRegistered($email, $pdo)
-{
-    // asd@asd.ru
-    $prepared = $pdo->prepare('select * from users where email = :email');
-    $prepared->execute(['email' => trim($email)]);
-    return $prepared->fetch(PDO::FETCH_ASSOC);
-}
+echo '<pre>';
 
 $isRegistered = alreadyRegistered($_POST['email'], $pdo);
 
-
 if (!$isRegistered) {
     $isRegistered = registerUser($_POST['name'], $_POST['email'], $_POST['phone'], $pdo);
-} else {
-//    echo 'ddddddd';
 }
 
-function registerUser($name, $email, $phone, Pdo $pdo)
-{
-    $prepared = $pdo->prepare('INSERT INTO users (name, email, phone) VALUES (:name, :email, :phone)');
-    $prepared->execute(['email' => trim($email), 'name' => $name, 'phone' => $phone]);
-    $id = $pdo->lastInsertId();
-    $prepared = $pdo->prepare('select * from users where id = :id');
-    $prepared->execute(['id' => $id]);
-    return $prepared->fetch(PDO::FETCH_ASSOC);
-}
+$data = registerOrder(
+    $_POST['street'],
+    $_POST['home'],
+    $_POST['part'],
+    $_POST['appt'],
+    $_POST['floor'],
+    $_POST['comment'],
+    $isRegistered['id'],
+    $pdo
+);
 
-function registerOrder($street, $home, $housing, $apartment, $floor, $comment, $id_users, $pdo)
-{
-    $prepared = $pdo->prepare('INSERT INTO `order` (street, home, housing, apartment, floor, comment, id_users)
- VALUES (:street, :home, :housing, :apartment, :floor, :comment, :id_users)');
-    $prepared->execute(['street' => $street, 'home' => $home, 'housing' => $housing, 'apartment' => $apartment, 'floor' => $floor, 'comment' => $comment, 'id_users' => $id_users]);
-    $id = $pdo->lastInsertId();
-    $prepared = $pdo->prepare('select * from order where id = :id');
-    $prepared->execute(['id' => $id]);
-    return $prepared->fetch(PDO::FETCH_ASSOC);
-}
+$cae = $pdo->prepare('select * from `order` where id_users = :id_user');
+$cae->execute(['id_user' => $data['id_users']]);
+$der = $cae->fetchAll(PDO::FETCH_ASSOC);
 
-$data = registerOrder($_POST['street'], $_POST['home'], $_POST['part'], $_POST['appt'], $_POST['floor'], $_POST['comment'],$isRegistered['id'], $pdo);
-//print_r($isRegistered);
-$da = json_encode($data);
-print_r($data);
-file_put_contents('admin.html', 'zakaz '.$data['id']);
+$mail_message = '
+    <html>
+        <head>
+            <title>Заявка</title>
+        </head>
+        <body>
+            <h2>Заказ № '.$data['id'].'</h2>
+            <h3>Ваш заказ будет доставлен по адресу:</h3>
+            <ul>
+                <li>Дом:' . $data['home'] . '</li>
+                <li>Корпус: ' . $data['housing'] . '</li>
+                <li>Квартира: ' . $data['apartment'] . '</li>
+                <li>Этаж: ' . $data['floor'] . '</li>
+                <li>Содержимое заказа: DarkBeefBurger за 500 рублей, 1 шт</li>
+            </ul>
+            <p>Это ваш '.count($der). ' заказ</p>
+        </body>
+    </html>';
+
+
+//$da = json_encode($data);
+file_put_contents('mail.html', $mail_message);
+
+echo ('Ваш заказ принят');
