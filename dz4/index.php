@@ -16,17 +16,24 @@
     </select>
     <div>
         <h4>Километры</h4>
-        <input type="text" value="" name="kilometers">
+        <input type="text" value="0" name="kilometers">
     </div>
     <div>
         <h4>Часы</h4>
-        <input type="text" value="" name="hour">
+        <input type="text" value="0" name="hour">
         <h4>Минуты</h4>
         <input type="text" value="0" name="minutes">
     </div>
     <div>
         <h2>Возраст водителя, лет</h2>
-        <input type="text" name="age">
+        <input type="text" value="18" name="age">
+    </div>
+    <div>
+        <h2>Дополнительные услуги</h2>
+        <div>GPS</div>
+        <input type="checkbox" name="gps">
+        <div>Дополнительный водитель, 100 руб</div>
+        <input type="checkbox" name="driver">
     </div>
     <button>Отправить</button>
 </form>

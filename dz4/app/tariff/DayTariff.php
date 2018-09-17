@@ -2,9 +2,13 @@
 
 namespace dz4\app\tariff;
 
-class DayTariff
+abstract class DayTariffAbstr
 {
-    public function dayFun($varKlm, $varHur, $varMin)
+    abstract public function dayFun($varKlm, $varHur, $varMin, $varAge);
+}
+class DayTariff extends DayTariffAbstr
+{
+    public function dayFun($varKlm, $varHur, $varMin, $varAge)
     {
         if ($varHur<24 && $varHur>0) {
             $varHur=1;
@@ -16,6 +20,10 @@ class DayTariff
             $varHur = 2;
         }
         $sum = $varKlm*1 + $varHur*1000 + $varMin*0;
+
+        if ($varAge>=18 && $varAge<=21) {
+            $sum = $sum*1.1;
+        }
         return $sum;
     }
 }
