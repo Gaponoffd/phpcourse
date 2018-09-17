@@ -3,11 +3,14 @@ namespace dz4\app\tariff;
 
 trait TraitGps
 {
-    public function gpsFun($varGps)
+
+    public function gpsFunBasis($varKlm, $varHur, $varMin, $varAge)
     {
-        if ($varGps=='on') {
-            $gpsPrice = 15;
-            return $gpsPrice;
+        $sum = $varKlm*10 + $varHur*60*3 + $varMin*3*15;
+        if ($varAge>=18 && $varAge<=21) {
+            $sum = $sum*1.1;
         }
+
+        return $sum;
     }
 }

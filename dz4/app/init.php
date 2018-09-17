@@ -25,23 +25,14 @@ $varDrv = $_POST['driver'];
 print_r($_POST);
 echo '<br/>';
 
-//function implementTariff($fig)
-//{
-//    if ($fig instanceof Figure) {
-//        $fig->draw();
-//    } else {
-//        echo 'Неизвестная фигура';
-//    }
-//    echo PHP_EOL;
-//}
-
 if ($varAge>=18 && $varAge<=65) {
     if ($varTrf == 'base') {
         $basisTariff = new BasisTariff();
-        echo $basisTariff->basisFun($varKlm, $varHur, $varMin, $varAge);
-
-        echo $basisTariff->gpsFun($varGps);
-
+        if ($varGps=='on') {
+            echo $basisTariff->gpsFunBasis($varKlm, $varHur, $varMin, $varAge);
+        } else {
+            echo $basisTariff->basisFun($varKlm, $varHur, $varMin, $varAge);
+        }
     } elseif ($varTrf == 'hourly') {
         $hourTariff = new HourTariff();
         echo $hourTariff->hourFun($varKlm, $varHur, $varMin, $varAge);
