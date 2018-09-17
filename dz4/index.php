@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +14,26 @@
         <option value="dayli">Суточный</option>
         <option value="student">Студенческий</option>
     </select>
-    <span>Километры</span>
-    <input type="text" value="1" name="kilometers">
-    <span>Минуты</span>
-    <input type="text" value="1" name="minutes">
-    <h2>Возраст водителя, лет</h2>
-    <input type="text" name="age">
+    <div>
+        <h4>Километры</h4>
+        <input type="text" value="" name="kilometers">
+    </div>
+    <div>
+        <h4>Часы</h4>
+        <input type="text" value="" name="hour">
+        <h4>Минуты</h4>
+        <input type="text" value="0" name="minutes">
+    </div>
+    <div>
+        <h2>Возраст водителя, лет</h2>
+        <input type="text" name="age">
+    </div>
     <button>Отправить</button>
 </form>
+
 </body>
 </html>
+
+
+
+

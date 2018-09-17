@@ -4,14 +4,12 @@ namespace dz4\app\tariff;
 
 class HourTariff
 {
-    public function hourFun($varKlm, $varMin)
+    public function hourFun($varKlm, $varHur, $varMin)
     {
-        if ($varMin <= 60) {
+        if ($varMin <= 60 && $varMin > 0) {
             $varMin = 1;
-        } elseif ($varMin > 60 && $varMin <= 120) {
-            $varMin = 2;
         }
-        $sum = $varKlm * 0 + $varMin * 200;
+        $sum = $varKlm * 0 + $varHur * 200 + $varMin * 200;
         return $sum;
     }
 }

@@ -12,9 +12,9 @@ namespace dz4\app\tariff;
 
 class BasisTariff
 {
-    public function basisFun($varKlm, $varMin)
+    public function basisFun($varKlm, $varHur, $varMin)
     {
-        $sum = $varKlm*10 + $varMin*3;
+        $sum = $varKlm*10 + $varHur*60*3 + $varMin*3;
         return $sum;
     }
 }
